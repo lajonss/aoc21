@@ -9,11 +9,15 @@ void main () {
         boards.add (new Board ());
 
     foreach (var number in numbers)
-        foreach (var board in boards) {
+        for (var i = boards.size - 1; i >= 0; i--) {
+            var board = boards[i];
             board. mark(number);
             if (board.is_winning ()) {
-                stdout.printf ("%d\n", number * board.get_unmarked_score ());
-                return;
+                if (boards.size == 1) {
+                    stdout.printf ("%d\n", number * board.get_unmarked_score ());
+                    return;
+                } else
+                    boards.remove_at (i);
             }
         }
 
