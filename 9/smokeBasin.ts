@@ -1,26 +1,7 @@
-import * as readline from 'readline';
+import { directions, readBoard } from './util';
 
-let rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: false
-});
-
-const directions = [
-    [-1, 0],
-    [1, 0],
-    [0, -1],
-    [0, 1]
-];
-
-var board:number[][] = [];
-
-rl.on('line', (line) => {
-    let lineArray = Array.from(line).map((c) => Number(c));
-    board.push(lineArray);
-});
-
-rl.on('close', () => {
+async function main() {
+    let board = await readBoard();
     let height = board.length;
     let width = board[0].length;
     let factorSum = 0;
@@ -44,4 +25,6 @@ rl.on('close', () => {
             factorSum += value + 1;
     }
     console.log(factorSum);
-});
+}
+
+main();
