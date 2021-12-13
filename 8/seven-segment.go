@@ -115,9 +115,9 @@ func computeNumbersFromString(input string) ([4]int) {
 	return output
 }
 
-func main() {
+func readStdin(f func ([4]int, int) int) (int) {
+	var acc int
 	reader := bufio.NewReader(os.Stdin)
-	sum1478 := 0
 	for {
 		input, err := reader.ReadString('\n')
 		if (len(input) == 0) {
@@ -126,11 +126,7 @@ func main() {
 		if (err != nil) {
 			panic(err)
 		}
-		for _, v := range computeNumbersFromString(input) {
-			switch v {
-				case 1, 4, 7, 8: sum1478 += 1
-			}
-		}
+		acc = f(computeNumbersFromString(input), acc)
 	}
-	fmt.Println(sum1478)
+	return acc
 }
