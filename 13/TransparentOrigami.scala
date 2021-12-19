@@ -18,9 +18,9 @@ object TransparentOrigami {
     def main(args: Array[String]) = {
         val lines = Source.stdin.getLines()
         var dots = parseDots(lines).toSet
-        for (fold <- parseFolds(lines).take(1))
+        for (fold <- parseFolds(lines))
             dots = dots.map((d) => foldAlong(d, fold)).toSet
-        println(dots.size)
+        printDots(dots)
     }
 
     private def parseDots(lines: Iterator[String]) = getInputBlock(lines).map(parseDot)
@@ -48,4 +48,14 @@ object TransparentOrigami {
     private def foldAlong(value: Int, index: Int) =
         if (value < index) value
         else index - value + index
+
+    private def printDots(dots: Set[Dot]) = {
+        val width = dots.map((d) => d.x).max
+        val height = dots.map((d) => d.y).max
+        for (y <- 0 to height) {
+            for (x <- 0 to width)
+                print(if (dots contains new Dot(x, y)) "#" else ".")
+            println("")
+        }
+    }
 }
